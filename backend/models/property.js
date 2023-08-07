@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
+});
+
+// ImageSchema.virtual("thumbnail").get(function () {
+//   return this.url.replace("/upload", "/upload/w_200");
+// });
+
 const propertySchema = new Schema({
   author: {
     type: Schema.Types.ObjectId,
@@ -18,9 +27,7 @@ const propertySchema = new Schema({
     type: String,
     required: true,
   },
-  picture: {
-    type: String,
-  },
+  picture: [ImageSchema],
   price: {
     type: Number,
     required: true,

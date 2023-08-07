@@ -26,16 +26,6 @@ const UserWidget = () => {
 
     const getAuthData = async () => {
       if (!data) {
-        toast.warn("plese login ", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
         navigate("/login");
       } else {
         try {

@@ -2,38 +2,54 @@ const express = require("express");
 const mongoose = require('mongoose');
 const Property = require('../models/property');
 require("dotenv").config();
-// const secretKey = process.env.SECRATE;
-// const jwt = require("jsonwebtoken");
+const { storage } = require("../cloudinary/index");
+
+
+
+const multer = require("multer")
+const upload = multer({ storage: storage });
+
+
 const { verifyAuth, verifyAuthorization } = require("../middleware/verify");
 const router = express.Router();
 
+
+
+
+
+
 // Apply the verifyAuth middleware to the route for adding a new property
 
-router.post("/property/addproperty", verifyAuth, async (req, res) => {
-  const { name, description, location, picture, price } = req.body;
-  if (!name || !description || !location || !picture || !price) {
-    return res.status(403).json({ error: "Please fill up all fields" });
-  }
-  const check = await Property.findOne({ name: name });
 
+router.post("/property/addproperty", verifyAuth, upload.single("picture"), async (req, res) => {
+  const { name, description, location, price } = req.body;
+  if (!name || !description || !location || !price || !req.file) {
+    return res.status(403).json({ error: "Please fill up all fields and upload a single picture" });
+  }
+
+  const check = await Property.findOne({ name: name });
   if (check) {
     return res.status(401).json({ msg: "Property already exists" });
   }
+
   try {
     const newProperty = new Property({
       name,
       description,
       location,
-      picture,
+      picture: { url: req.file.path, filename: req.file.filename }, // Store the single image details in an object
       price,
-      author: req.user._id, // Assign the authenticated user's ID as the author of the property
+      author: req.user._id,
     });
+
     await newProperty.save();
     res.status(200).json({ msg: "Property added successfully" });
   } catch (e) {
-    res.status(400).json({ msg: e.message }); // Extract the error message and send it as a string
+    res.status(400).json({ msg: e.message });
   }
 });
+
+
 
 //route for show / retrieve the property
 router.get("/property/showproperty", async (req, res) => {
