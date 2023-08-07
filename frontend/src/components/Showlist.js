@@ -86,6 +86,8 @@ const Showlist = () => {
     }
   };
 
+
+
   const handleDeleteProperty = async (propertyId) => {
     try {
       const token = localStorage.getItem("token");
@@ -171,15 +173,20 @@ const Showlist = () => {
       });
     }
   };
+
+
+
   return (
     <>
       {showUpdate && <Update propertyId={currentPropertyId} closeUpdate={() => setShowUpdate(false)} />}
       <div className="min-w-fit">
         <h2 className="text-3xl text-blue-700 font-bold text-center mb-4">Property List</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols- md:grid-cols-3 gap-4">
           {properties.map((property) => (
             <div key={property._id} className="border p-4 rounded-lg shadow-md w-60">
               <h3 className="text-lg font-bold mb-2">{property.name.slice(0, 20)}</h3>
+             
+              <img src={property.picture[0].url} className="w-44 h-28 "  alt="" />
               <p className="mb-2">
                 <span className="font-bold">Price:</span> ₹ {property.price}
               </p>
