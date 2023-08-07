@@ -71,6 +71,14 @@ router.get("/property/showproperty", async (req, res) => {
       .json({ error: "An error occurred while retrieving properties" });
   }
 });
+
+
+
+
+
+
+
+
 router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, async (req, res) => {
   const { name, description, location, picture, price } = req.body;
   const propertyId = req.params.propertyId; // Get the property ID from the route parameters
@@ -102,6 +110,8 @@ router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, async
     res.status(500).json({ error: "An error occurred while updating the property" });
   }
 });
+
+
 //route to delete the property
 
 

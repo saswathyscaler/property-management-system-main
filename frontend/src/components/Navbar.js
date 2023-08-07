@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'; 
 
-const Navbar = ({ onSearch }) => {
+const Navbar = () => {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -15,7 +15,6 @@ const Navbar = ({ onSearch }) => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    onSearch(searchQuery);
   };
 
   if (isHomePage || login || register) {
@@ -26,7 +25,7 @@ const Navbar = ({ onSearch }) => {
     <nav className="bg-blue-300 p-4 sticky top-0 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  flex justify-between items-center">
         <Link to="/" className="text-white font-semibold text-xl">
-          My Website
+        DreamHome Realty!
         </Link>
 
         <form onSubmit={handleSearchSubmit}>
