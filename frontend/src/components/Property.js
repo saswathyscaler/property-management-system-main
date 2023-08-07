@@ -41,9 +41,9 @@ const Property = () => {
   return (
     <div className="w-full px-2 py-[2rem] flex flex-col gap-[0.5rem] justify-between md:flex-row">
       <div className="fixed w-full md:w-[21%]">
-        <UserWidget />
+        <UserWidget/>
         <button
-          className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white  my-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={handleAddProperty}
         >
           Add New Property

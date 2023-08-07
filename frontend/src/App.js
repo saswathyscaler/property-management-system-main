@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Import the BrowserRouter as Router
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,8 +15,8 @@ import Navbar from "./components/Navbar";
 function App() {
   return (
     <Router>
-    <Navbar/>
-      {/* Add the Router component here */}
+    <Navbar />
+    {/* Add the Router component here */}
       <>
         <Routes>
           <Route exact path="/" element={<Home />} />

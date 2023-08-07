@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  // State to keep track of login status
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("token") ? true : false);
 
   const handleLogout = () => {
-    // Clear the local storage when the user clicks on the "Logout" link
+    // Clear the local storage and update login status
     localStorage.clear();
-    setIsLoggedIn(false); // Set isLoggedIn state to false when the user logs out
+    setIsLoggedIn(false);
   };
 
   return (
