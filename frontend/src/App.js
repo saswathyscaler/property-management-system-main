@@ -10,10 +10,12 @@ import Home from "./components/Home";
 import Addproperty from "./components/Addproperty";
 import Showlist from "./components/Showlist";
 import Update from "./components/Update";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <Router>
+    <Navbar/>
       {/* Add the Router component here */}
       <>
         <Routes>

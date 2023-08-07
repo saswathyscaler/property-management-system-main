@@ -36,15 +36,14 @@ module.exports.verifyAuth =  (req, res, next) => {
 
 // Middleware to verify user authorization (to check if the user is the author of the property)
 
-
 module.exports.verifyAuthorization = async (req, res, next) => {
-  const propertyId = req.params.propertyId; // Use req.params.propertyId to get the property ID
+  const propertyId = req.params.propertyId;
 
   if (!mongoose.Types.ObjectId.isValid(propertyId)) {
     return res.status(400).json({ error: "Invalid property ID" });
   }
 
-  const userId = req.user._id;
+  const userId = req.user._id; // Access the user ID from req.user
 
   try {
     // Find the property by its ID
@@ -56,16 +55,13 @@ module.exports.verifyAuthorization = async (req, res, next) => {
 
     // Check if the user is the author of the property
     if (!property.author || !property.author.equals(userId)) {
-      return res
-        .status(403)
-        .json({
-          error: "Unauthorized: You are not the author of this property",
-        });
+      return res.status(403).json({
+        error: "Unauthorized: You are not the author of this property",
+      });
     }
 
     next();
   } catch (error) {
-    // Log the error for debugging purposes
     console.error("Error verifying authorization:", error);
     res
       .status(500)

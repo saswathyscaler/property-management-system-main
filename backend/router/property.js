@@ -55,34 +55,20 @@ router.get("/property/showproperty", async (req, res) => {
       .json({ error: "An error occurred while retrieving properties" });
   }
 });
-
-
-
-router.post("/property/edit/:_id", verifyAuth,verifyAuthorization, async (req, res) => {
+router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, async (req, res) => {
   const { name, description, location, picture, price } = req.body;
-
-  // Check if the provided ID is a valid MongoDB ObjectId
-  if (!mongoose.Types.ObjectId.isValid(req.params._id)) {
-    return res.status(400).json({ error: "Invalid property ID" });
-  }
+  const propertyId = req.params.propertyId; // Get the property ID from the route parameters
 
   try {
     // Find the property by its ID
-    const property = await Property.findById(req.params._id);
-    console.log("property", property);
+    const property = await Property.findById(propertyId);
 
     if (!property) {
       return res.status(404).json({ error: "Property not found" });
     }
 
-    // Check if the user is the author of the property
-    if (!property.author.equals(req.user.id)) {
-      return res
-        .status(403)
-        .json({
-          error: "Unauthorized: You are not the author of this property",
-        });
-    }
+    // Check if the user is the author of the property (this check is already done in verifyAuthorization middleware)
+    // No need to repeat it here, so you can directly update the property fields
 
     // Update the property fields with the new values
     property.name = name;
@@ -96,12 +82,10 @@ router.post("/property/edit/:_id", verifyAuth,verifyAuthorization, async (req, r
 
     res.status(200).json({ msg: "Property updated successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "An error occurred while updating the property" });
+    console.error("Error updating property:", error);
+    res.status(500).json({ error: "An error occurred while updating the property" });
   }
 });
-
 //route to delete the property
 
 
