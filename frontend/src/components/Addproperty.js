@@ -14,7 +14,7 @@ const Addproperty = ({ setProperties }) => {
     price: "",
   });
 
-  const [token, setToken] = useState(""); // Store token in state
+  const [token, setToken] = useState(""); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Addproperty = ({ setProperties }) => {
       });
       navigate("/login");
     } else {
-      setToken(data); // Set the token in state if it exists
+      setToken(data); 
     }
   };
 
@@ -65,7 +65,6 @@ const Addproperty = ({ setProperties }) => {
       return;
     }
 
-    // Check if the user is authenticated
     if (!token) {
       toast.error("You need to be authenticated to add a new property", {
         position: "top-right",
@@ -87,7 +86,7 @@ const Addproperty = ({ setProperties }) => {
       formData.append("location", location);
       formData.append("price", price);
       if (image) {
-        formData.append("picture", image); // Append the image to the FormData
+        formData.append("picture", image); 
       }
       const response = await fetch(`http://localhost:${port}/property/addproperty`, {
         method: "POST",
@@ -165,7 +164,7 @@ const Addproperty = ({ setProperties }) => {
             type="file"
             className="p-1 border rounded-lg"
             name="picture"
-            accept="image/*" // Add accept attribute to only allow image files
+            accept="image/*" 
             onChange={(e) => {
               if (e.target.files && e.target.files.length > 0) {
                 setImage(e.target.files[0]);

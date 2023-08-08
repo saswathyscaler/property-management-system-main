@@ -55,9 +55,7 @@ const Showlist = () => {
 
   const handleEditProperty = async (propertyId) => {
     try {
-      // Check if the user is authenticated and has the appropriate role
       if (!token) {
-        // Modify "admin" to the appropriate role that can edit properties
         toast.error("You need to be an authorized user to edit a property", {
           position: "top-right",
           autoClose: 3000,

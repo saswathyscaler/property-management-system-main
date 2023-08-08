@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  // State to keep track of login status
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("token") ? true : false);
 
   const handleLogout = () => {
-    // Clear the local storage and update login status
     localStorage.clear();
     setIsLoggedIn(false);
   };
@@ -23,7 +21,6 @@ const Home = () => {
           </Link>
           <div className="flex justify-center items-center flex-row">
             {isLoggedIn ? (
-              // Show "Logout" link when the user is logged in
               <Link
                 className="text-white px-4 py-2 rounded hover:text-slate-500"
                 onClick={handleLogout}
@@ -31,7 +28,6 @@ const Home = () => {
                 Logout
               </Link>
             ) : (
-              // Show "Login" and "Register" links when the user is not logged in
               <>
                 <Link
                   to="/login"

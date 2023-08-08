@@ -75,13 +75,10 @@ const editProperty = async (req, res) => {
     }
 
     if (req.file) {
-      // Delete the old picture from MongoDB if it exists
       if (property.picture && property.picture.filename) {
-        // Remove the old image data from MongoDB
         await Property.findByIdAndUpdate(propertyId, { $unset: { picture: 1 } });
       }
 
-      // Upload the new picture to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path);
       property.picture = {
         url: result.secure_url,
@@ -94,7 +91,6 @@ const editProperty = async (req, res) => {
     property.location = location;
     property.price = price;
 
-    // Save the updated property
     await property.save();
 
     res.status(200).json({ msg: "Property updated successfully" });
@@ -140,12 +136,10 @@ const getSingleProperty = async (req, res) => {
   const propertyId = req.params.propertyId;
 
   try {
-    // Check if the provided ID is a valid MongoDB ObjectId
     if (!mongoose.Types.ObjectId.isValid(propertyId)) {
       return res.status(400).json({ error: "Invalid property ID" });
     }
 
-    // Find the property by its ID in the database
     const property = await Property.findById(propertyId);
 
     if (!property) {

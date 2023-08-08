@@ -12,7 +12,6 @@ const router = express.Router();
 
 
 const {
-  
   showProperties,
   editProperty,
   deleteProperty,
@@ -47,7 +46,6 @@ router.post("/property/addproperty", verifyAuth, upload.single("picture"), async
     res.status(400).json({ msg: e.message });
   }
 });
-
 
 router.get("/property/showproperty", showProperties);
 router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, upload.single("picture"), editProperty);

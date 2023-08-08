@@ -8,7 +8,7 @@ const Update = ({ propertyId, closeUpdate }) => {
     price: "",
     location: "",
     description: "",
-    picture: null, // Changed to store the file object
+    picture: null, 
   });
 
 
@@ -29,25 +29,21 @@ useEffect(() => {
 
       if (response.status === 200) {
         const propertyData = await response.json();
-        // Set the initial state with the fetched property data
         setUpdatedProperty({
           name: propertyData.name,
           price: propertyData.price.toString(),
           location: propertyData.location,
           description: propertyData.description,
-          picture: null, // Set the picture to null as we don't have the file object here
+          picture: null, 
         });
       } else {
-        // Handle error if property data fetch fails
         console.error("Failed to fetch property data", response);
         toast.error("Failed to fetch property data", {
-          // ... Toast configuration ...
         });
       }
     } catch (error) {
       console.error("Error occurred while fetching property data", error);
       toast.error("Error occurred while fetching property data", {
-        // ... Toast configuration ...
       });
     }
   };
@@ -89,7 +85,7 @@ useEffect(() => {
       formData.append("location", location);
       formData.append("description", description);
       if (picture) {
-        formData.append("picture", picture); // Append the file object to the form data
+        formData.append("picture", picture); 
       }
 
       const token = localStorage.getItem("token");
@@ -100,7 +96,7 @@ useEffect(() => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: formData, // Send the form data instead of a JSON string
+          body: formData, 
         }
       );
 
