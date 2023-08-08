@@ -1,37 +1,47 @@
 // propertyController.js
 const mongoose = require("mongoose");
 const Property = require("../models/property");
-const { cloudinary } = require("../cloudinary/index");
+const { storage,cloudinary } = require("../cloudinary/index");
 
-const addProperty = async (req, res) => {
-  const { name, description, location, price } = req.body;
-  if (!name || !description || !location || !price || !req.file) {
-    return res
-      .status(403)
-      .json({ error: "Please fill up all fields and upload a single picture" });
-  }
+const multer = require("multer");
+const upload = multer({ storage });
 
-  const check = await Property.findOne({ name: name });
-  if (check) {
-    return res.status(401).json({ msg: "Property already exists" });
-  }
 
-  try {
-    const newProperty = new Property({
-      name,
-      description,
-      location,
-      picture: { url: req.file.path, filename: req.file.filename }, // Store the single image details in an object
-      price,
-      author: req.user._id,
-    });
+// const addProperty = async (req, res) => {
+//     const { name, description, location, price } = req.body;
+//     if (!name || !description || !location || !price || !req.file) {
+//       return res.status(403).json({
+//         error: "Please fill up all fields and upload a single picture",
+//       });
+//     }
 
-    await newProperty.save();
-    res.status(200).json({ msg: "Property added successfully" });
-  } catch (e) {
-    res.status(400).json({ msg: e.message });
-  }
-};
+//     try {
+//       const check = await Property.findOne({ name: name });
+//       if (check) {
+//         return res.status(401).json({ msg: "Property already exists" });
+//       }
+
+//       const newProperty = new Property({
+//         name,
+//         description,
+//         location,
+//         picture: {
+//           url: req.file.path,
+//           filename: req.file.filename,
+//         }, // Store the single image details in an object
+//         price,
+//         author: req.user._id,
+//       });
+
+//       await newProperty.save();
+//       res.status(200).json({ msg: "Property added successfully" });
+//     } catch (e) {
+//       res
+//         .status(500)
+//         .json({ error: "Failed to add property. Please try again later." });
+//     }
+//   }
+
 
 
 
@@ -50,6 +60,8 @@ const showProperties = async (req, res) => {
       .json({ error: "An error occurred while retrieving properties" });
   }
 };
+
+
 
 const editProperty = async (req, res) => {
   const { name, description, location, price } = req.body;
@@ -139,7 +151,6 @@ const getSingleProperty = async (req, res) => {
     if (!property) {
       return res.status(404).json({ error: "Property not found" });
     }
-
     res.status(200).json(property);
   } catch (error) {
     console.error("Error retrieving property:", error);
@@ -150,7 +161,6 @@ const getSingleProperty = async (req, res) => {
 };
 
 module.exports = {
-  addProperty,
   showProperties,
   editProperty,
   deleteProperty,

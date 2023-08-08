@@ -22,6 +22,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
+
           <Route exact path="/property" element={<Property />} />
           <Route exact path="property/addproperty" element={<Addproperty />} />
           <Route exact path="property/showlist" element={<Showlist />} />

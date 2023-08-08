@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Update from "./Update";
 import { Link } from "react-router-dom";
-
+import PropertyCard from "../widgets/PropertyCard";
 
 const port = 7000;
 
@@ -181,45 +181,17 @@ const Showlist = () => {
   return (
     <>
       {showUpdate && <Update propertyId={currentPropertyId} closeUpdate={() => setShowUpdate(false)} />}
-      <div className="min-w-fit">
+      <div className="max-w-screen">
         <h2 className="text-3xl text-blue-700 font-bold text-center mb-4">Property List</h2>
-        <div className="grid grid-cols-1 sm:grid-cols- md:grid-cols-3 gap-4">
-          {properties.map((property) => (
-
-            <div key={property._id} className="border p-4 rounded-lg shadow-md w-60">
-            
-            
-            {<h3 className="text-lg font-bold mb-2">{property.name.slice(0, 20)}</h3>}
-           
-             
-              <img src={property.picture[0].url} className="w-44 h-28 "  alt="" />
-              <p className="mb-2">
-                <span className="font-bold">Price:</span> ₹ {property.price}
-              </p>
-              <p className="mb-2">
-                <span className="font-bold">Location:</span> {property.location}
-              </p>
-              <div className="h-20 overflow-y-auto mb-2"> {/* Limit the height and enable vertical scrolling */}
-                <p className="mb-2">
-                  <span className="font-bold">Description:</span> {property.description.slice(0, 40)}
-                </p>
-              </div>
-              <div className="flex justify-between">
-                <button
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  onClick={() => handleEditProperty(property._id)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  onClick={() => handleDeleteProperty(property._id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
+        <div className="grid lg:grid-cols-4 w-[98%] ml-2 sm:grid-cols-1 gap-4">
+        {properties.map((property) => (
+          <PropertyCard
+            key={property._id}
+            property={property}
+            onEdit={() => handleEditProperty(property._id)}
+            onDelete={() => handleDeleteProperty(property._id)}
+          />
+        ))}
         </div>
       </div>
     </>

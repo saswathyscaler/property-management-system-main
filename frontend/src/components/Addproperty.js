@@ -121,7 +121,6 @@ const Addproperty = ({ setProperties }) => {
           progress: undefined,
           theme: "colored",
         });
-        setProperties((prev) => [...prev, data]); // Add the new property to the existing list
         navigate("/property");
       }
     } catch (error) {

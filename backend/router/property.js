@@ -12,14 +12,43 @@ const router = express.Router();
 
 
 const {
-  addProperty,
+  
   showProperties,
   editProperty,
   deleteProperty,
   getSingleProperty
 } = require("../controllers/propertyController");
 
-router.post("/property/addproperty", verifyAuth, upload.array("picture"), addProperty);
+
+router.post("/property/addproperty", verifyAuth, upload.single("picture"), async (req, res) => {
+  const { name, description, location, price } = req.body;
+  if (!name || !description || !location || !price || !req.file) {
+    return res.status(403).json({ error: "Please fill up all fields and upload a single picture" });
+  }
+
+  const check = await Property.findOne({ name: name });
+  if (check) {
+    return res.status(401).json({ msg: "Property already exists" });
+  }
+
+  try {
+    const newProperty = new Property({
+      name,
+      description,
+      location,
+      picture: { url: req.file.path, filename: req.file.filename }, // Store the single image details in an object
+      price,
+      author: req.user._id,
+    });
+
+    await newProperty.save();
+    res.status(200).json({ msg: "Property added successfully" });
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
+});
+
+
 router.get("/property/showproperty", showProperties);
 router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, upload.single("picture"), editProperty);
 router.delete("/property/delete/:propertyId", verifyAuth, verifyAuthorization, deleteProperty);
