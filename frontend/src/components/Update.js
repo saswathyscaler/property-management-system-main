@@ -1,17 +1,62 @@
-// Update.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const port = 7000;
-
 const Update = ({ propertyId, closeUpdate }) => {
   const [updatedProperty, setUpdatedProperty] = useState({
     name: "",
     price: "",
     location: "",
     description: "",
-    picture: "",
+    picture: null, // Changed to store the file object
   });
+
+
+  
+useEffect(() => {
+  const fetchPropertyData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `http://localhost:${port}/property/${propertyId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const propertyData = await response.json();
+        // Set the initial state with the fetched property data
+        setUpdatedProperty({
+          name: propertyData.name,
+          price: propertyData.price.toString(),
+          location: propertyData.location,
+          description: propertyData.description,
+          picture: null, // Set the picture to null as we don't have the file object here
+        });
+      } else {
+        // Handle error if property data fetch fails
+        console.error("Failed to fetch property data", response);
+        toast.error("Failed to fetch property data", {
+          // ... Toast configuration ...
+        });
+      }
+    } catch (error) {
+      console.error("Error occurred while fetching property data", error);
+      toast.error("Error occurred while fetching property data", {
+        // ... Toast configuration ...
+      });
+    }
+  };
+
+  fetchPropertyData();
+}, [propertyId]);
+
+
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -38,22 +83,24 @@ const Update = ({ propertyId, closeUpdate }) => {
     }
 
     try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("price", price);
+      formData.append("location", location);
+      formData.append("description", description);
+      if (picture) {
+        formData.append("picture", picture); // Append the file object to the form data
+      }
+
       const token = localStorage.getItem("token");
       const response = await fetch(
         `http://localhost:${port}/property/edit/${propertyId}`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            name,
-            price,
-            location,
-            description,
-            picture,
-          }),
+          body: formData, // Send the form data instead of a JSON string
         }
       );
 
@@ -130,6 +177,14 @@ const Update = ({ propertyId, closeUpdate }) => {
     }
   };
 
+  const handlePictureChange = (event) => {
+    const file = event.target.files[0];
+    setUpdatedProperty({
+      ...updatedProperty,
+      picture: file,
+    });
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg">
@@ -150,12 +205,10 @@ const Update = ({ propertyId, closeUpdate }) => {
             Picture
           </label>
           <input
-            type="text"
-            className="p-1 border rounded-lg"
-            name="picture"
-            placeholder="Enter the picture URL"
-            value={updatedProperty.picture}
-            onChange={handleInputChange}
+            type="file"
+            accept="image/*"
+            className="ml-2"
+            onChange={handlePictureChange}
           />
 
           <label htmlFor="location" className="ml-2">
