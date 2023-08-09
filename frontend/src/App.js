@@ -11,6 +11,7 @@ import Addproperty from "./components/Addproperty";
 import Update from "./components/Update";
 import Navbar from "./components/Navbar";
 import PropertyDetails from "./components/PropertyDetails";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer/>
 
         <ToastContainer />
       </>

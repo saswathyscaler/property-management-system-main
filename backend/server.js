@@ -21,7 +21,11 @@ app.use(property)
 
 
 const PORT =7000;
+
 mongoose.set("strictQuery", false);
+
+
+
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
