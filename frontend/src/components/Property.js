@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import UserWidget from "../widgets/UserWidgets";
 import Addproperty from "./Addproperty";
 import Showlist from "./Showlist";
+
+let mount = false;
 
 const Property = () => {
   const navigate = useNavigate();
@@ -12,9 +13,15 @@ const Property = () => {
   console.log(data);
 
   useEffect(() => {
-    getAuthData();
-    console.log("get auth data");
+    if (mount) {
+      getAuthData();
+    }
+    mount = true;
+    return () => {
+    };
   }, []);
+
+
 
   const getAuthData = async () => {
     if (!data) {
@@ -34,16 +41,14 @@ const Property = () => {
 
  const [showAddProperty, setShowAddProperty] = useState(false);
  const [properties, setProperties] = useState([]);
-  const handleAddProperty = () => {
-    setShowAddProperty(true); 
-  };
+  
 
   return (
     <div className="w-full px-2 py-[2rem] flex flex-col gap-[0.5rem] justify-between md:flex-row">
       <div className="flex flex-wrap mt-4 ">
 
         {showAddProperty ? (
-          <Addproperty setProperties={setProperties} />
+          <Addproperty  />
         ) : (
           <Showlist properties={properties} />
         )}

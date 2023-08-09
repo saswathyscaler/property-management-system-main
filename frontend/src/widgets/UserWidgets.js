@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSimplybuilt } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
+import { toast } from "react-toastify";
+
 const port = 7000;
+let mount = false;
 
 const UserWidget = () => {
   const [user, setUser] = useState({
@@ -11,35 +14,44 @@ const UserWidget = () => {
   });
 
   const data = localStorage.getItem("token");
-  console.log(data);
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAuthData();
-    console.log("get auth data");
-  }, []);
+    if (mount) {
+      getAuthData();
+    }
+    mount = true;
+    return () => {
+      // cleanup function
+    }
+  }, [data, navigate]);
 
   const getAuthData = async () => {
-    if (!data) {
-      navigate("/login");
-    } else {
-      try {
-        const responce = await fetch(`http://localhost:${port}/api/property`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${data}`,
-          },
-          mode: "cors",
-        });
-        const result = await responce.json();
-        console.log(result);
-        setUser(result);
-      } catch (error) {}
-    }
+    try {
+      const responce = await fetch(`http://localhost:${port}/api/property`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${data}`,
+        },
+        mode: "cors",
+      });
+      const result = await responce.json();
+      console.log(result);
+      setUser(result);
+    } catch (error) {
+      toast.error("An error occurre", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });    }
   };
-  //   const capName = username;
+
   const logout = () => {
     localStorage.clear();
     navigate("/");
@@ -50,17 +62,16 @@ const UserWidget = () => {
       <div>
         <BiLogOut onClick={logout} className="h-[20px] w-[20px]" />
       </div>
-    
-        <div className="flex items-center justify-between gap-[1rem] cursor-pointer">
-          <FaSimplybuilt className=" h-[40px] w-[40px]" />
-          <div>
-            <div className="flex flex-col gap-3">
-              <h3>{user.name}</h3>
-            </div>
-            <p className="font-normal text-sm text-[#074FB2]">@{user.email}</p>
-          </div>
-        </div>
 
+      <div className="flex items-center justify-between gap-[1rem] cursor-pointer">
+        <FaSimplybuilt className=" h-[40px] w-[40px]" />
+        <div>
+          <div className="flex flex-col gap-3">
+            <h3>{user.name}</h3>
+          </div>
+          <p className="font-normal text-sm text-[#074FB2]">@{user.email}</p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -21,7 +21,9 @@ const Showlist = () => {
 
   const fetchProperties = async () => {
     try {
-      const response = await fetch(`http://localhost:${port}/property/showproperty`);
+      const response = await fetch(
+        `http://localhost:${port}/property/showproperty`
+      );
       const data = await response.json();
 
       if (response.status >= 400 || !data) {
@@ -86,17 +88,18 @@ const Showlist = () => {
     }
   };
 
-
-
   const handleDeleteProperty = async (propertyId) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:${port}/property/delete/${propertyId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:${port}/property/delete/${propertyId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Property deleted successfully", {
@@ -111,7 +114,9 @@ const Showlist = () => {
         });
 
         // Fetch the updated properties after deletion
-        const updatedProperties = properties.filter((property) => property._id !== propertyId);
+        const updatedProperties = properties.filter(
+          (property) => property._id !== propertyId
+        );
         setProperties(updatedProperties);
       } else if (response.status === 400) {
         const errorData = await response.json();
@@ -137,16 +142,19 @@ const Showlist = () => {
           theme: "colored",
         });
       } else if (response.status === 403) {
-        toast.error("Unauthorized: You are not authorized to delete this property", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toast.error(
+          "Unauthorized: You are not authorized to delete this property",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
       } else {
         toast.error("Failed to delete property", {
           position: "top-right",
@@ -174,22 +182,28 @@ const Showlist = () => {
     }
   };
 
-
-
   return (
     <>
-      {showUpdate && <Update propertyId={currentPropertyId} closeUpdate={() => setShowUpdate(false)} />}
+      {showUpdate && (
+        <Update
+          propertyId={currentPropertyId}
+          closeUpdate={() => setShowUpdate(false)}
+        />
+      )}
       <div className="max-w-screen">
-        <h2 className="text-3xl text-blue-700 font-bold text-center mb-4">Property List</h2>
+        <h2 className="text-3xl text-blue-700 font-bold text-center mb-4">
+          Property List
+        </h2>
         <div className="grid lg:grid-cols-4 w-[98%] ml-2 sm:grid-cols-1 gap-4">
-        {properties.map((property) => (
-          <PropertyCard
-            key={property._id}
-            property={property}
-            onEdit={() => handleEditProperty(property._id)}
-            onDelete={() => handleDeleteProperty(property._id)}
-          />
-        ))}
+          {properties.map((property) => (
+            <Link key={property._id} to={`/property/${property._id}`}>
+              <PropertyCard
+                property={property}
+                onEdit={() => handleEditProperty(property._id)}
+                onDelete={() => handleDeleteProperty(property._id)}
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </>

@@ -8,9 +8,9 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import Home from "./components/Home";
 import Addproperty from "./components/Addproperty";
-import Showlist from "./components/Showlist";
 import Update from "./components/Update";
 import Navbar from "./components/Navbar";
+import PropertyDetails from "./components/PropertyDetails";
 
 function App() {
   return (
@@ -25,7 +25,8 @@ function App() {
 
           <Route exact path="/property" element={<Property />} />
           <Route exact path="property/addproperty" element={<Addproperty />} />
-          <Route exact path="property/showlist" element={<Showlist />} />
+          <Route path="/property/:propertyId" element={<PropertyDetails/> }/>
+
           <Route exact path="property/update" element={<Update />} />
 
           <Route path="*" element={<NotFound />} />

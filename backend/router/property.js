@@ -15,7 +15,7 @@ const {
   showProperties,
   editProperty,
   deleteProperty,
-  getSingleProperty
+  // getSingleProperty
 } = require("../controllers/propertyController");
 
 
@@ -50,6 +50,30 @@ router.post("/property/addproperty", verifyAuth, upload.single("picture"), async
 router.get("/property/showproperty", showProperties);
 router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, upload.single("picture"), editProperty);
 router.delete("/property/delete/:propertyId", verifyAuth, verifyAuthorization, deleteProperty);
-router.get("/property/:propertyId", getSingleProperty);
+
+
+
+router.get("/property/:propertyId", async (req, res) => {
+  const propertyId = req.params.propertyId;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+      return res.status(400).json({ error: "Invalid property ID" });
+    }
+
+    const property = await Property.findById(propertyId);
+
+    if (!property) {
+      return res.status(404).json({ error: "Property not found" });
+    }
+    res.status(200).json(property);
+  } catch (error) {
+    console.error("Error retrieving property:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving the property" });
+  }
+}
+);
 
 module.exports = router;

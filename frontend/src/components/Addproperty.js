@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 const port = 7000;
 
-const Addproperty = ({ setProperties }) => {
+const Addproperty = () => {
   const [image, setImage] = useState(null);
 
   const [input, setInput] = useState({
