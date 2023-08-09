@@ -49,7 +49,8 @@ const UserWidget = () => {
         draggable: true,
         progress: undefined,
         theme: "colored",
-      });    }
+      });  
+      }
   };
 
   const logout = () => {
