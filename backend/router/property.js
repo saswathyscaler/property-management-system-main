@@ -14,7 +14,7 @@ const router = express.Router();
 const {
   showProperties,
   editProperty,
-  deleteProperty,
+  // deleteProperty,
   // getSingleProperty
 } = require("../controllers/propertyController");
 
@@ -49,8 +49,31 @@ router.post("/property/addproperty", verifyAuth, upload.single("picture"), async
 
 router.get("/property/showproperty", showProperties);
 router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, upload.single("picture"), editProperty);
-router.delete("/property/delete/:propertyId", verifyAuth, verifyAuthorization, deleteProperty);
 
+
+router.delete("/property/delete/:propertyId", verifyAuth, verifyAuthorization,async (req, res) => {
+  const propertyId = req.params.propertyId;
+
+  console.log(`propertyId ${propertyId}`);
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+      return res.status(400).json({ error: "Invalid property ID" });
+    }
+
+    const deletedProperty = await Property.findByIdAndDelete(propertyId);
+
+    if (!deletedProperty) {
+      return res.status(404).json({ error: "Property not found" });
+    }
+
+    res.status(200).json({ msg: "Property deleted successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the property" });
+  }
+})
 
 
 router.get("/property/:propertyId", async (req, res) => {

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"; 
 import UserWidget from "../widgets/UserWidgets";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { BiSolidUserCircle } from "react-icons/bi";
 
 const Navbar = () => {
   const location = useLocation();
@@ -11,6 +12,16 @@ const Navbar = () => {
   const isHomePage = location.pathname === "/";
   const login = location.pathname === "/login";
   const register = location.pathname === "/register";
+
+
+
+  const [isUserIconClicked, setUserIconClicked] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleUserIcon = () => {
+    setUserIconClicked(!isUserIconClicked);
+  };
+
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -23,7 +34,6 @@ const Navbar = () => {
   const toggleHamburger = () => {
     setHamburgerClicked(!isHamburgerClicked);
   };
-  const navigate = useNavigate();
   const handleAddProperty = () => {
     navigate("property/addproperty"); 
   };
@@ -31,60 +41,63 @@ const Navbar = () => {
     return null;
   }
 
-  return (
-    <nav className="bg-blue-300 p-4 sticky top-0 z-10">
-      <div className="max-w-7xl mx-auto sm:px-6 flex  sm:flex-row justify-between items-center">
-        <div className="flex flex-col">
-          <div className="flex w-full md:w-[22%]">
-            <UserWidget />
-          </div>
+   return (
+    <nav className="bg-blue-300 p-4 sticky top-0 z-10 flex flex-col sm:flex-row items-center">
+  <BiSolidUserCircle
+    className={`text-white cursor-pointer w-8 h-8`}
+    onClick={toggleUserIcon}
+  />
 
-          <div>
-            <button
-              className=" text-white   py-2 px-4 "
-              onClick={handleAddProperty}
-            >
-              Add New Property
-            </button>
-          </div>
-        </div>
-        <div className="text-center mr-9">
-          <Link
-            to="/"
-            className="text-white font-semibold text-xl mb-4 sm:mb-0 "
-          >
-            DreamHome Realty!
-          </Link>
-        </div>
+  <div className="max-w-7xl mx-auto sm:px-6 flex  sm:flex-row justify-between items-center w-full">
+    <div className={`flex ${isUserIconClicked ? '' : 'hidden'} sm:w-1/4 sm:mr-4`}>
+      <UserWidget />
+    </div>
 
-        <div className="flex flex-col sm:flex-row mb-3">
-          <div className={`mt-5 ${isHamburgerClicked ? "flex" : "hidden"}`}>
-            <form onSubmit={handleSearchSubmit} className="flex">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full sm:w-64 py-2 px-4 rounded-md mb-2 sm:mb-0 sm:mr-2 focus:outline-none"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-              <button
-                type="submit"
-                className="bg-blue-700 text-white py-2 px-4 h-10 rounded-md hover:bg-blue-600 focus:outline-none"
-              >
-                Search
-              </button>
-            </form>
-          </div>
+    <div className={`mt-2 ${isUserIconClicked ? 'hidden' : 'flex'} sm:w-1/4 sm:mt-0`}>
+      <button
+        className="text-white py-2 px-4"
+        onClick={handleAddProperty}
+      >
+        Add New Property
+      </button>
+    </div>
 
-          <button
-            className="text-white cursor-pointer ml-2"
-            onClick={toggleHamburger}
-          >
-            {isHamburgerClicked ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-      </div>
-    </nav>
+    <div className="text-center sm:w-1/4 sm:text-left">
+      <Link
+        to="/"
+        className="text-white font-semibold text-xl mb-4 sm:mb-0"
+      >
+        DreamHome Realty!
+      </Link>
+    </div>
+
+    <div className="flex flex-col sm:flex-row mb-3 sm:w-1/4">
+      <form onSubmit={handleSearchSubmit} className="flex">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="w-full sm:w-48 py-2 px-4 rounded-md mb-2 sm:mb-0 sm:mr-2 focus:outline-none"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+        <button
+          type="submit"
+          className="bg-blue-700 text-white py-2 px-4 h-10 rounded-md hover:bg-blue-600 focus:outline-none"
+        >
+          Search
+        </button>
+      </form>
+
+      <button
+        className="text-white cursor-pointer ml-2"
+        onClick={toggleHamburger}
+      >
+        {isHamburgerClicked ? <FaTimes /> : <FaBars />}
+      </button>
+    </div>
+  </div>
+</nav>
+
   );
 };
 

@@ -44,7 +44,7 @@ const Property = () => {
   
 
   return (
-    <div className="w-full px-2 py-[2rem] flex flex-col gap-[0.5rem] justify-between md:flex-row">
+    <div className="w-full px-2  flex flex-col gap-[0.5rem] justify-between md:flex-row">
       <div className="flex flex-wrap mt-4 ">
 
         {showAddProperty ? (

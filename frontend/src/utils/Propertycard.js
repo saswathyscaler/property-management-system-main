@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PropertyCard = ({ property, onEdit, onDelete }) => {
+const PropertyCard = ({ property}) => {
   return (
     <div className="border p-4 rounded-lg shadow-md w-60">
       
@@ -16,8 +16,7 @@ const PropertyCard = ({ property, onEdit, onDelete }) => {
       <p className="mb-2">
         <span className="font-bold">Description:</span> {property.description}
       </p>
-      <button onClick={onEdit}>Edit</button>
-      <button onClick={onDelete}>Delete</button>
+    
     </div>
   );
 };

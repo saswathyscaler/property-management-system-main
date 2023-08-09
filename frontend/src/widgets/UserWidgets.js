@@ -58,13 +58,13 @@ const UserWidget = () => {
   };
 
   return (
-    <div className="flex items-center justify-between gap-[1rem] pb-[1.1rem] ">
+    <div className="flex items-center justify-between gap-[1rem]  ">
       <div>
         <BiLogOut onClick={logout} className="h-[20px] w-[20px]" />
       </div>
 
       <div className="flex items-center justify-between gap-[1rem] cursor-pointer">
-        <FaSimplybuilt className=" h-[40px] w-[40px]" />
+        <FaSimplybuilt className=" h-[30px] w-[30px]" />
         <div>
           <div className="flex flex-col gap-3">
             <h3>{user.name}</h3>

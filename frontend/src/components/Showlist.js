@@ -198,9 +198,7 @@ const Showlist = () => {
           {properties.map((property) => (
             <Link key={property._id} to={`/property/${property._id}`}>
               <PropertyCard
-                property={property}
-                onEdit={() => handleEditProperty(property._id)}
-                onDelete={() => handleDeleteProperty(property._id)}
+                property={property}               
               />
             </Link>
           ))}
