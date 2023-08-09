@@ -12,6 +12,7 @@ import Update from "./components/Update";
 import Navbar from "./components/Navbar";
 import PropertyDetails from "./components/PropertyDetails";
 import Footer from "./components/Footer";
+import Search from "./components/Search";
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
           <Route path="/property/:propertyId" element={<PropertyDetails/> }/>
 
           <Route exact path="property/update" element={<Update />} />
+          <Route path="*" element={<NotFound />} />
+
+
+          <Route path="/search" element={<Search />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

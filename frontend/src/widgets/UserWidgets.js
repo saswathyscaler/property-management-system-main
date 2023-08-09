@@ -22,7 +22,7 @@ const UserWidget = () => {
     }
     mount = true;
     return () => {
-      // cleanup function
+      
     }
   }, [data, navigate]);
 

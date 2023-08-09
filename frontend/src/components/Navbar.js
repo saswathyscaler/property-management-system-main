@@ -71,30 +71,7 @@ const Navbar = () => {
       </Link>
     </div>
 
-    <div className="flex flex-col sm:flex-row mb-3 sm:w-1/4">
-      <form onSubmit={handleSearchSubmit} className="flex">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full sm:w-48 py-2 px-4 rounded-md mb-2 sm:mb-0 sm:mr-2 focus:outline-none"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-        <button
-          type="submit"
-          className="bg-blue-700 text-white py-2 px-4 h-10 rounded-md hover:bg-blue-600 focus:outline-none"
-        >
-          Search
-        </button>
-      </form>
-
-      <button
-        className="text-white cursor-pointer ml-2"
-        onClick={toggleHamburger}
-      >
-        {isHamburgerClicked ? <FaTimes /> : <FaBars />}
-      </button>
-    </div>
+  
   </div>
 </nav>
 
