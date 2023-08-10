@@ -97,6 +97,7 @@ const PropertyDetails = () => {
   }
   return (
     <>
+    <div>
       <div className="flex flex-col m-5 " >
         <h1 className="font-extralight text-2xl items-center">
           {property.name.toUpperCase()}
@@ -153,6 +154,7 @@ const PropertyDetails = () => {
           closeUpdate={() => setShowUpdate(false)}
         />
       )}
+      </div>
     </>
   );
 };
