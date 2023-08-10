@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FaSimplybuilt } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { toast } from "react-toastify";
-
 const port = 7000;
 let mount = false;
 
@@ -27,6 +26,10 @@ const UserWidget = () => {
   }, [data, navigate]);
 
   const getAuthData = async () => {
+    if (!data) {
+      return; // User is not logged in, so no need to make the API call
+    }
+
     try {
       const responce = await fetch(`http://localhost:${port}/api/property`, {
         method: "GET",
@@ -40,7 +43,7 @@ const UserWidget = () => {
       console.log(result);
       setUser(result);
     } catch (error) {
-      toast.error("An error occurre", {
+      toast.error("An error occurred", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -49,8 +52,8 @@ const UserWidget = () => {
         draggable: true,
         progress: undefined,
         theme: "colored",
-      });  
-      }
+      });
+    }
   };
 
   const logout = () => {

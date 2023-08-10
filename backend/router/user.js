@@ -86,7 +86,7 @@ router.put("api/login/:id", async (req, res) => {
   console.log(req.body);
 });
 
-//route for Property page
+// route for Property page
 
 router.get("/api/property", validate, (req, res) => {
   console.log(req.correctUser);

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 
 
+
 const PropertyDetails = () => {
   const { propertyId } = useParams();
   const [property, setProperty] = useState(null);
@@ -97,64 +98,65 @@ const PropertyDetails = () => {
   }
   return (
     <>
-    <div>
-      <div className="flex flex-col m-5 " >
-        <h1 className="font-extralight text-2xl items-center">
-          {property.name.toUpperCase()}
+    <div className="p-2">
+    <h1 className="ml-6 font-light text-2xl text-green-600 items-center">
+      {property.name.toUpperCase()}
+    </h1>
+    <div className="flex m-5 ">
+      <div className="w-1/2 pr-6">
+        <img
+          src={property.picture[0].url}
+          alt={property.name}
+          className="w-full border rounded-lg"
+        />
+      </div>
+  
+      <div className="w-1/2">
+        <h1>
+          <span className="font-bold text-blue-300">Price : </span>₹
+          {property.price}
         </h1>
-        <div className="flex justify-between gap-6 mt-4">
-          <img
-            src={property.picture[0].url}
-            alt={property.name}
-            className="w-1/2 h-80 border rounded-lg"
-          />
-
-          <div className="w-1/2">
-            <h1>
-              <span className="font-bold text-blue-300">Price :  </span>₹
-              {property.price}
-            </h1>
-
-            <h1>
-              <span className="font-bold text-blue-300">Location :  </span>
-              {property.location}
-            </h1>
-            <div className="">
-              <h1 className="font-bold text-blue-300">About This Property : </h1>
-              <p>Description: {property.description}</p>
-            </div>
-          </div>
+  
+        <h1>
+          <span className="font-bold text-blue-300">Location : </span>
+          {property.location}
+        </h1>
+        <div className="mt-4">
+          <h1 className="font-bold text-blue-300">About This Property : </h1>
+          <p>Description: {property.description}</p>
+        </div>
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={handleEditProperty}
+            className="bg-blue-500 p-2 md:p-4 border rounded-md mx-2"
+          >
+            Edit Property
+          </button>
+          <button
+            onClick={handleDeleteProperty}
+            className="bg-red-500 p-2 md:p-4 border rounded-md mx-2"
+          >
+            Delete Property
+          </button>
         </div>
       </div>
-
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={handleEditProperty}
-          className="bg-blue-500 p-4 border rounded-md mx-2"
-        >
-          Edit Property
-        </button>
-        <button
-          onClick={handleDeleteProperty}
-          className="bg-red-500 p-4 border rounded-md mx-2"
-        >
-          Delete Property
-        </button>
-      </div>
-      <button
-        onClick={() => navigate("/property")}
-        className="bg-blue-300 p-4 border rounded-md ml-5 mb-3"
-      >
-        Back to Property List
-      </button>
-
-      {showUpdate && (
-        <Update
-          propertyId={propertyId}
-          closeUpdate={() => setShowUpdate(false)}
-        />
-      )}
-      </div>
+    </div>
+  
+    <button
+      onClick={() => navigate("/property")}
+      className="bg-blue-300 p-2 md:p-4 border rounded-md ml-5 mb-3 block"
+    >
+      Back to Property List
+    </button>
+  
+    {showUpdate && (
+      <Update
+        propertyId={propertyId}
+        closeUpdate={() => setShowUpdate(false)}
+      />
+    )}
+  </div>
+  
     </>
   );
 };

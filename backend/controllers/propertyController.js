@@ -1,67 +1,70 @@
 // propertyController.js
 const mongoose = require("mongoose");
 const Property = require("../models/property");
-const { storage,cloudinary } = require("../cloudinary/index");
+const { storage, cloudinary } = require("../cloudinary/index");
 
 const multer = require("multer");
 const upload = multer({ storage });
 
+const addProperty = async (req, res) => {
+  const { name, description, location, price } = req.body;
+  if (!name || !description || !location || !price || !req.file) {
+    return res
+      .status(403)
+      .json({ error: "Please fill up all fields and upload a single picture" });
+  }
 
-// const addProperty = async (req, res) => {
-//     const { name, description, location, price } = req.body;
-//     if (!name || !description || !location || !price || !req.file) {
-//       return res.status(403).json({
-//         error: "Please fill up all fields and upload a single picture",
-//       });
-//     }
+  const check = await Property.findOne({ name: name });
+  if (check) {
+    return res.status(401).json({ msg: "Property already exists" });
+  }
 
-//     try {
-//       const check = await Property.findOne({ name: name });
-//       if (check) {
-//         return res.status(401).json({ msg: "Property already exists" });
-//       }
-
-//       const newProperty = new Property({
-//         name,
-//         description,
-//         location,
-//         picture: {
-//           url: req.file.path,
-//           filename: req.file.filename,
-//         }, // Store the single image details in an object
-//         price,
-//         author: req.user._id,
-//       });
-
-//       await newProperty.save();
-//       res.status(200).json({ msg: "Property added successfully" });
-//     } catch (e) {
-//       res
-//         .status(500)
-//         .json({ error: "Failed to add property. Please try again later." });
-//     }
-//   }
-
-
-
-
-const showProperties = async (req, res) => {
   try {
-    const properties = await Property.find();
+    const newProperty = new Property({
+      name,
+      description,
+      location,
+      picture: { url: req.file.path, filename: req.file.filename }, // Store the single image details in an object
+      price,
+      author: req.user._id,
+    });
 
-    if (properties.length === 0) {
-      return res.status(404).json({ error: "No properties found" });
-    }
-    res.status(200).json(properties);
-  } catch (error) {
-    console.error("Error retrieving properties:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while retrieving properties" });
+    await newProperty.save();
+    res.status(200).json({ msg: "Property added successfully" });
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
   }
 };
 
+const showProperties = async (req, res) => {
+  try {
+    const { price, location } = req.query;
 
+    const filter = {};
+    if (price) {
+      const [minPrice, maxPrice] = price.split("-");
+      filter.price = { $gt: parseInt(minPrice), $lte: parseInt(maxPrice) };
+    }
+    if (location) {
+      filter.location = location;
+    }
+
+    const filteredProperties = await Property.find(filter);
+
+    if (filteredProperties.length === 0) {
+      return res.status(404).json({ error: "No properties found" });
+    }
+
+    res.status(200).json(filteredProperties);
+  } catch (error) {
+    console.error("Error retrieving filtered properties:", error);
+    res
+      .status(500)
+      .json({
+        error: "An error occurred while retrieving filtered properties",
+      });
+  }
+};
 
 const editProperty = async (req, res) => {
   const { name, description, location, price } = req.body;
@@ -76,13 +79,15 @@ const editProperty = async (req, res) => {
 
     if (req.file) {
       if (property.picture && property.picture.filename) {
-        await Property.findByIdAndUpdate(propertyId, { $unset: { picture: 1 } });
+        await Property.findByIdAndUpdate(propertyId, {
+          $unset: { picture: 1 },
+        });
       }
 
       const result = await cloudinary.uploader.upload(req.file.path);
       property.picture = {
         url: result.secure_url,
-        filename: result.public_id
+        filename: result.public_id,
       };
     }
 
@@ -101,10 +106,6 @@ const editProperty = async (req, res) => {
       .json({ error: "An error occurred while updating the property" });
   }
 };
-
-
-
-
 
 const deleteProperty = async (req, res) => {
   const propertyId = req.params.propertyId;
@@ -130,8 +131,6 @@ const deleteProperty = async (req, res) => {
   }
 };
 
-
-
 const getSingleProperty = async (req, res) => {
   const propertyId = req.params.propertyId;
 
@@ -155,6 +154,7 @@ const getSingleProperty = async (req, res) => {
 };
 
 module.exports = {
+  addProperty,
   showProperties,
   editProperty,
   deleteProperty,

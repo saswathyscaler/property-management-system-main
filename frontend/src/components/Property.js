@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Addproperty from "./Addproperty";
 import Showlist from "./Showlist";
-import Search from "./Search";
 
 let mount = false;
 

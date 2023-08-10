@@ -139,91 +139,91 @@ const Register = () => {
   return (
     <>
     <div className="bg-gray-700 flex justify-center items-center min-h-screen">
-    <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-3xl">
-     <h2 className="text-3xl text-blue-700 font-bold  text-center">
-          Register Yourself
-        </h2>
-          <div className="flex">
-          <div className="w-full p-5 ">
-            <img src={reg} alt='register.png' className="rounded-2xl"/>
-          </div>
-          <div className=" w-full  px10">
+  <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-3xl w-full sm:w-11/12 md:w-9/12 lg:w-8/12">
+    <h2 className="text-3xl text-blue-700 font-bold text-center">
+      Register Yourself
+    </h2>
+    <div className="flex flex-col md:flex-row">
+      <div className="w-full md:w-2/3 p-5">
+        <img src={reg} alt="register.png" className="rounded-2xl" />
+      </div>
+      <div className="w-full md:w-2/3 px-5 mt-5">
+        <form className="flex flex-col gap-1">
+          <label htmlFor="name" className="ml-2">
+            Name
+          </label>
+          <input
+            type="text"
+            className="p-2 border rounded-lg"
+            name="name"
+            placeholder="Enter your name"
+            onChange={handelChange}
+          />
+          <label htmlFor="email" className="ml-2">
+            Email
+          </label>
+          <input
+            type="email"
+            className="p-2 border rounded-lg"
+            name="email"
+            placeholder="Enter your email"
+            onChange={handelChange}
+          />
 
-            <form className="flex flex-col gap-1 mt-5">
-              <label htmlFor="name" className="ml-2">
-                Name
-              </label>
-              <input
-                type="text"
-                className="p-2 border rounded-lg"
-                name="name"
-                placeholder="Enter your name"
-                onChange={handelChange}
-              />
-              <label htmlFor="email" className="ml-2">
-                Email
-              </label>
-              <input
-                type="email"
-                className="p-2 border rounded-lg"
-                name="email"
-                placeholder="Enter your email"
-                onChange={handelChange}
-              />
+          <label htmlFor="password" className="ml-2">
+            Password
+          </label>
+          <input
+            type="password"
+            className="p-2 border rounded-lg"
+            name="password"
+            placeholder="Enter your password"
+            onChange={handelChange}
+          />
 
-              <label htmlFor="password" className="ml-2">
-                password
-              </label>
-              <input
-                type="password"
-                className="p-2 border rounded-lg"
-                name="password"
-                placeholder="Enter your password"
-                onChange={handelChange}
-              />
-              <label htmlFor="cpassword" className="ml-2">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                className="p-2 border rounded-lg"
-                name="cpassword"
-                placeholder="Confirm your password"
-                onChange={handelChange}
-              />
+          <label htmlFor="cpassword" className="ml-2">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            className="p-2 border rounded-lg"
+            name="cpassword"
+            placeholder="Confirm your password"
+            onChange={handelChange}
+          />
 
-              <button
-                onClick={register}
-                className="bg-[#074FB2] text-white py-2 rounded-lg mt-3 hover:bg-blue-600"
-              >
-                Register
-              </button>
-            </form>
+          <button
+            onClick={register}
+            className="bg-[#074FB2] text-white py-2 rounded-lg mt-3 hover:bg-blue-600"
+          >
+            Register
+          </button>
+        </form>
 
-            <div className="flex justify-center  items-center gap-4 mt-4">
-              <p className="text-[#074FB2] text-base">
-                Already have an account:
-              </p>
-              <button
-                onClick={nav}
-                className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400 "
-              >
-                Login
-              </button>
-            </div>
-            <div className="flex justify-center  items-center gap-4 mt-4">
-              <p className="text-[#074FB2] text-base">Back to home :</p>
-              <button
-                onClick={() => navigate("/")}
-                className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400"
-              >
-                Home
-              </button>
-            </div>
-          </div>
-          </div>
+        <div className="flex justify-center items-center gap-4 mt-4">
+          <p className="text-[#074FB2] text-base">Already have an account:</p>
+          <button
+            onClick={nav}
+            className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400"
+          >
+            Login
+          </button>
+        </div>
+
+        <div className="flex justify-center items-center gap-4 mt-4">
+          <p className="text-[#074FB2] text-base">Back to home:</p>
+          <button
+            onClick={() => navigate("/")}
+            className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400"
+          >
+            Home
+          </button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
     </>
   );
 };
