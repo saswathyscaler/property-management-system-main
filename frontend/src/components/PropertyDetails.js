@@ -102,21 +102,19 @@ const PropertyDetails = () => {
     <h1 className="ml-6 font-light text-2xl text-green-600 items-center">
       {property.name.toUpperCase()}
     </h1>
-    <div className="flex m-5 ">
-      <div className="w-1/2 pr-6">
+    <div className="flex flex-col md:flex-row m-5">
+      <div className="w-full md:w-1/2 pr-6 mb-4 md:mb-0">
         <img
           src={property.picture[0].url}
           alt={property.name}
           className="w-full border rounded-lg"
         />
       </div>
-  
-      <div className="w-1/2">
+      <div className="w-full md:w-1/2">
         <h1>
           <span className="font-bold text-blue-300">Price : </span>₹
           {property.price}
         </h1>
-  
         <h1>
           <span className="font-bold text-blue-300">Location : </span>
           {property.location}
@@ -141,14 +139,12 @@ const PropertyDetails = () => {
         </div>
       </div>
     </div>
-  
     <button
       onClick={() => navigate("/property")}
       className="bg-blue-300 p-2 md:p-4 border rounded-md ml-5 mb-3 block"
     >
       Back to Property List
     </button>
-  
     {showUpdate && (
       <Update
         propertyId={propertyId}

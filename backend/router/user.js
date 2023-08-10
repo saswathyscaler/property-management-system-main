@@ -59,11 +59,6 @@ router.post("/api/login", async (req, res) => {
         if (!userToken) {
           return res.status(500).json({ msg: "internal server error" });
         } else {
-          // Store the token in the response cookies
-          res.cookie("token", userToken, {
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Set the token expiration time (e.g., 1 day)
-            httpOnly: true,
-          });
 
           res.status(200).json({ msg: "user loggedin successfully", token: userToken });
         }
