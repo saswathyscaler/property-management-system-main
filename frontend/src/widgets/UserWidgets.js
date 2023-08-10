@@ -67,7 +67,7 @@ const UserWidget = () => {
       <div className="flex items-center justify-between gap-[1rem] cursor-pointer">
         <FaSimplybuilt className=" h-[30px] w-[30px]" />
         <div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
             <h3>{user.name}</h3>
           </div>
           <p className="font-normal text-sm text-[#074FB2]">@{user.email}</p>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from "react-toastify";
 
 const Search = ({ onSearch }) => {
   const [filter1Value, setFilter1Value] = useState('');
@@ -7,26 +8,49 @@ const Search = ({ onSearch }) => {
   const handleSearch = async () => {
     try {
   
-      const baseUrl = 'http://localhost:7000'; 
+     
       const queryParams = new URLSearchParams({
         price: filter1Value,
         location: filter2Value,
       });
 
-      const url = `${baseUrl}/property/showproperty?${queryParams}`;
+      const url = `http://localhost:7000/property/showproperty?${queryParams}`;
 
       const response = await fetch(url);
+      if (response.status >= 400 ) {
+        toast.warn("No property match your querry", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
       const data = await response.json();
       onSearch(data); 
     } catch (error) {
       console.error('Error fetching filtered properties:', error);
+      toast.error(`some error occure  ${error}` , {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
+
+
+ 
   return (
-    <div className="search-container p-4 bg-blue-100 border rounded-lg my-6">
-      <div className="flex gap-4 items-center">
-
-
+    <div className=" p-4 bg-blue-100 border rounded-lg my-6 ">
+      <div className="flex lg:flex-row  sm:flex-col sm:w-full lg:gap-4 lg:items-center ">
         <select
           value={filter1Value}
           onChange={(e) => setFilter1Value(e.target.value)}

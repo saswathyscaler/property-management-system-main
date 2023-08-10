@@ -64,7 +64,7 @@ useEffect(() => {
 
   const handleUpdateProperty = async () => {
     const { name, price, location, description, picture } = updatedProperty;
-    if (!name || !price || !location || !description || !picture) {
+    if (!name || !price || !location || !description ) {
       toast.warn("All fields are required", {
         position: "top-right",
         autoClose: 3000,

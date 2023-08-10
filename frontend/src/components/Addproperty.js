@@ -209,11 +209,11 @@ const Addproperty = () => {
         >
           Add property
         </button>
-        <div className="flex flex-col gap-3 mt-4">
+        <div className="flex justify-around gap-3 mt-4">
           <div className="flex justify-center items-center">
             <button
               onClick={handleCancel}
-              className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400"
+              className="py-2 px-4 bg-red-500 border rounded-lg text-sm hover:bg-slate-400"
             >
               Cancel
             </button>
@@ -221,7 +221,7 @@ const Addproperty = () => {
           <div className="flex justify-center items-center">
             <button
               onClick={() => navigate("/")}
-              className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400"
+              className="py-2 px-4 bg-blue-300 border rounded-lg text-sm hover:bg-slate-400"
             >
               Home
             </button>

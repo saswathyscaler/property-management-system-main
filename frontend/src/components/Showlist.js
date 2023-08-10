@@ -18,8 +18,8 @@ const Showlist = () => {
 
   useEffect(() => {
     fetchProperties();
-    const storedToken = localStorage.getItem("token");
-    setToken(storedToken);
+    const userToken = localStorage.getItem("token");
+    setToken(userToken);
   }, []);
 
   const fetchProperties = async () => {
