@@ -47,6 +47,8 @@ router.post("/property/addproperty", verifyAuth, upload.single("picture"), async
   }
 });
 
+
+
 router.get('/property/showproperty', async (req, res) => {
   try {
     const { price, location } = req.query;
@@ -54,7 +56,7 @@ router.get('/property/showproperty', async (req, res) => {
     const filter = {};
     if (price) {
       const [minPrice, maxPrice] = price.split('-');
-      filter.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+      filter.price = { $gt: parseInt(minPrice), $lte: parseInt(maxPrice) };
     }
     if (location) {
       filter.location = location;

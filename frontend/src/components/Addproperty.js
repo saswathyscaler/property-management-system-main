@@ -145,7 +145,6 @@ const Addproperty = () => {
     <div className="bg-white p-3 border rounded-xl shadow-xl max-w-xl mt-4 mx-auto sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%]">
       <h2 className="text-3xl text-blue-700 font-bold text-center">Add new property</h2>
       <form className="flex flex-col gap-3 mt-5" encType="multipart/form-data">
-        {/* ... (other form elements) ... */}
           <label htmlFor="name" className="ml-2">
             Name
           </label>
@@ -210,7 +209,6 @@ const Addproperty = () => {
         >
           Add property
         </button>
-        {/* Cancel and Home buttons */}
         <div className="flex flex-col gap-3 mt-4">
           <div className="flex justify-center items-center">
             <button

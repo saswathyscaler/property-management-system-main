@@ -16,6 +16,8 @@ app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));  
 app.use(morgan("common"));
 app.use(cors());
+
+
 app.use(user);
 app.use(property)
 
