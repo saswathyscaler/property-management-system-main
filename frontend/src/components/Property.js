@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Addproperty from "./Addproperty";
 import Showlist from "./Showlist";
+import Search from "./Search";
 
 let mount = false;
 
@@ -44,16 +45,18 @@ const Property = () => {
   
 
   return (
-    <div className="w-full px-2  flex flex-col gap-[0.5rem] justify-between md:flex-row">
-      <div className="flex flex-wrap mt-4 ">
-
-        {showAddProperty ? (
-          <Addproperty  />
-        ) : (
-          <Showlist properties={properties} />
-        )}
+    <>
+      <Search/>
+      <div className="w-full px-2  flex flex-col gap-[0.5rem] justify-between md:flex-row">
+        <div className="flex flex-wrap mt-4 ">
+          {showAddProperty ? (
+            <Addproperty />
+          ) : (
+            <Showlist properties={properties} />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

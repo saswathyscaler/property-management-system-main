@@ -142,10 +142,10 @@ const Addproperty = () => {
   };
 
   return (
-    <>
-      <div className="bg-white p-3 border rounded-xl shadow-xl max-w-xl">
-        <h2 className="text-3xl text-blue-700 font-bold text-center">Add new property</h2>
-        <form className="flex flex-col gap-1 mt-5" encType="multipart/form-data">
+    <div className="bg-white p-3 border rounded-xl shadow-xl max-w-xl mt-4 mx-auto sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%]">
+      <h2 className="text-3xl text-blue-700 font-bold text-center">Add new property</h2>
+      <form className="flex flex-col gap-3 mt-5" encType="multipart/form-data">
+        {/* ... (other form elements) ... */}
           <label htmlFor="name" className="ml-2">
             Name
           </label>
@@ -204,16 +204,15 @@ const Addproperty = () => {
             rows={3}
             onChange={handleChange}
           />
-
           <button
-            onClick={addProperty}
-            className="bg-[#074FB2] text-white py-2 rounded-lg mt-3 hover:bg-blue-600"
-          >
-            Add property
-          </button>
-          {/* Cancel button */}
-          <div className="flex justify-center items-center gap-4 mt-4">
-            <p className="text-[#074FB2] text-base">Cancel and go back:</p>
+          onClick={addProperty}
+          className="bg-[#074FB2] text-white py-2 rounded-lg mt-3 hover:bg-blue-600"
+        >
+          Add property
+        </button>
+        {/* Cancel and Home buttons */}
+        <div className="flex flex-col gap-3 mt-4">
+          <div className="flex justify-center items-center">
             <button
               onClick={handleCancel}
               className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400"
@@ -221,9 +220,7 @@ const Addproperty = () => {
               Cancel
             </button>
           </div>
-          {/* Home button */}
-          <div className="flex justify-center items-center gap-4 mt-4">
-            <p className="text-[#074FB2] text-base">Back to home:</p>
+          <div className="flex justify-center items-center">
             <button
               onClick={() => navigate("/")}
               className="py-2 px-4 bg-white border rounded-lg text-sm hover:bg-slate-400"
@@ -231,9 +228,9 @@ const Addproperty = () => {
               Home
             </button>
           </div>
-        </form>
-      </div>
-    </>
+        </div>
+      </form>
+    </div>
   );
 };
 

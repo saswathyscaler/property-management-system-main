@@ -47,7 +47,37 @@ router.post("/property/addproperty", verifyAuth, upload.single("picture"), async
   }
 });
 
-router.get("/property/showproperty", showProperties);
+router.get('/property/showproperty', async (req, res) => {
+  try {
+    const { price, location } = req.query;
+
+    const filter = {};
+    if (price) {
+      const [minPrice, maxPrice] = price.split('-');
+      filter.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+    }
+    if (location) {
+      filter.location = location;
+    }
+
+    const filteredProperties = await Property.find(filter);
+
+    if (filteredProperties.length === 0) {
+      return res.status(404).json({ error: 'No properties found' });
+    }
+
+    res.status(200).json(filteredProperties);
+  } catch (error) {
+    console.error('Error retrieving filtered properties:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving filtered properties' });
+  }
+});
+
+
+
+
+
+
 router.post("/property/edit/:propertyId", verifyAuth, verifyAuthorization, upload.single("picture"), editProperty);
 
 
