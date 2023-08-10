@@ -40,7 +40,7 @@ const Showlist = () => {
           progress: undefined,
           theme: "colored",
         });
-      } else {
+      }else {
         setProperties(data);
       }
     } catch (error) {
@@ -59,6 +59,18 @@ const Showlist = () => {
   };
 
   const handleSearch = (filteredProperties) => {
+    if (filteredProperties.length === 0) {
+      toast.info('No properties matched your search criteria', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+    }
     setFilteredProperties(filteredProperties);
   };
 

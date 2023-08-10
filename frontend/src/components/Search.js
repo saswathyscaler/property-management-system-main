@@ -6,8 +6,8 @@ const Search = ({ onSearch }) => {
 
   const handleSearch = async () => {
     try {
-      // Construct the URL based on selected filter values
-      const baseUrl = 'http://localhost:7000'; // Replace with your API base URL
+  
+      const baseUrl = 'http://localhost:7000'; 
       const queryParams = new URLSearchParams({
         price: filter1Value,
         location: filter2Value,
@@ -17,7 +17,7 @@ const Search = ({ onSearch }) => {
 
       const response = await fetch(url);
       const data = await response.json();
-      onSearch(data); // Pass the filtered properties back to the parent component
+      onSearch(data); 
     } catch (error) {
       console.error('Error fetching filtered properties:', error);
     }
