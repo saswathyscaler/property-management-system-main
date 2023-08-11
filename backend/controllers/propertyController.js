@@ -46,11 +46,15 @@ const addProperty = async (req, res) => {
     res.status(400).json({ msg: e.message });
   }
 };
+
+
+
 const showProperties = async (req, res) => {
   try {
-    const { price, location, type, name } = req.query;
+    const { q, price, location, type } = req.query;
 
     const filter = {};
+
     if (price) {
       const [minPrice, maxPrice] = price.split("-");
       filter.price = { $gt: parseInt(minPrice), $lte: parseInt(maxPrice) };
@@ -61,8 +65,17 @@ const showProperties = async (req, res) => {
     if (type) {
       filter.type = type;
     }
-    if (name) {
-      filter.name = name; 
+
+    if (q) {
+      // Use regex to search properties based on the q query
+      const searchRegex = new RegExp(q, "i"); // Case-insensitive regex
+      filter.$or = [
+        { name: searchRegex },
+        { type: searchRegex },
+        { location: searchRegex },
+      
+        
+      ];
     }
 
     const filteredProperties = await Property.find(filter);
@@ -79,6 +92,9 @@ const showProperties = async (req, res) => {
     });
   }
 };
+
+
+
 
 const editProperty = async (req, res) => {
   const { name, description, location, price ,type,amenities } = req.body;

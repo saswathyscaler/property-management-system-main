@@ -9,7 +9,7 @@ const Search = ({ onSearch }) => {
 
   useEffect(() => {
     handleSearch();
-  }, [filter1Value, filter2Value, filter3Value]); 
+  }, [filter1Value, filter2Value, filter3Value]);
 
   const handleSearch = async () => {
     try {
@@ -51,12 +51,11 @@ const Search = ({ onSearch }) => {
     }
   };
 
-
-  const searchName = async (e) => {
-    e.preventDefault();
+  const searchName = async () => {
+  
     try {
       const queryParams = new URLSearchParams({
-        name: search,
+        q: search,
       });
 
       const url = `http://localhost:7000/property/showproperty?${queryParams}`;
@@ -89,7 +88,12 @@ const Search = ({ onSearch }) => {
         draggable: true,
         progress: undefined,
         theme: "colored",
-      });     }
+      });
+    }
+  };
+  const handleSearchFormSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission
+    searchName();
   };
   return (
     <div className="p-4 bg-blue-100 border rounded-lg my-6">
@@ -130,12 +134,15 @@ const Search = ({ onSearch }) => {
           <option value="other">other</option>
         </select>
 
-        <form onSubmit={searchName}>
+        <form onSubmit={handleSearchFormSubmit}>
           <input
             type="text"
             className="p-1 rounded border m-2"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              searchName()
+            }}
             name="searchInput"
           />
           <button
