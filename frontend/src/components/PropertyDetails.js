@@ -111,6 +111,11 @@ const PropertyDetails = () => {
         />
       </div>
       <div className="w-full md:w-1/2">
+      <h1>
+          <span className="font-bold text-blue-300">Property Type : </span>
+          {property.type}
+        </h1>
+        <h1></h1>
         <h1>
           <span className="font-bold text-blue-300">Price : </span>₹
           {property.price}
@@ -119,6 +124,10 @@ const PropertyDetails = () => {
           <span className="font-bold text-blue-300">Location : </span>
           {property.location}
         </h1>
+        <h1>
+        <span className="font-bold text-blue-300">Amenities  : </span>
+        {property.amenities}
+      </h1>
         <div className="mt-4">
           <h1 className="font-bold text-blue-300">About This Property : </h1>
           <p>Description: {property.description}</p>

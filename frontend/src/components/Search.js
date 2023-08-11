@@ -4,12 +4,14 @@ import { toast } from "react-toastify";
 const Search = ({ onSearch }) => {
   const [filter1Value, setFilter1Value] = useState("");
   const [filter2Value, setFilter2Value] = useState("");
+  const [filter3Value, setFilter3Value] = useState("");
 
   const handleSearch = async () => {
     try {
       const queryParams = new URLSearchParams({
         price: filter1Value,
         location: filter2Value,
+        type:filter3Value,
       });
 
       const url = `http://localhost:7000/property/showproperty?${queryParams}`;
@@ -67,10 +69,23 @@ const Search = ({ onSearch }) => {
           <option value="">Location</option>
           <option value="delhi">Delhi</option>
           <option value="bbsr">bbsr</option>
-          <option value="mumbai">mumbai</option>
+          <option value="mumbai,maharastra">mumbai</option>
           <option value="ctc">ctc</option>
           <option value="Japan">Japan</option>
         </select>
+
+
+        <select
+        value={filter3Value}
+        onChange={(e) => setFilter3Value(e.target.value)}
+        className="p-2 border rounded-md bg-blue-200 w-40" // Adjusted width
+      >
+        <option value="">Types</option>
+        <option value="villa">Villa</option>
+        <option value="corporate">Corporal</option>
+        <option value="other">other</option>
+      
+      </select>
 
         <button
           onClick={handleSearch}

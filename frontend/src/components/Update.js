@@ -8,6 +8,8 @@ const Update = ({ propertyId, closeUpdate }) => {
     price: "",
     location: "",
     description: "",
+    type:"",
+    amenities:"",
     picture: null, 
   });
 
@@ -34,6 +36,8 @@ useEffect(() => {
           price: propertyData.price.toString(),
           location: propertyData.location,
           description: propertyData.description,
+          type:propertyData.type,
+          amenities:propertyData.amenities,
           picture: null, 
         });
       } else {
@@ -63,8 +67,8 @@ useEffect(() => {
   };
 
   const handleUpdateProperty = async () => {
-    const { name, price, location, description, picture } = updatedProperty;
-    if (!name || !price || !location || !description ) {
+    const { name, price, location, description, picture,type,amenities } = updatedProperty;
+    if (!name || !price || !location || !description || !amenities|| !type ) {
       toast.warn("All fields are required", {
         position: "top-right",
         autoClose: 3000,
@@ -84,6 +88,9 @@ useEffect(() => {
       formData.append("price", price);
       formData.append("location", location);
       formData.append("description", description);
+      formData.append("amenities", amenities);
+      formData.append("type", type);
+
       if (picture) {
         formData.append("picture", picture); 
       }
@@ -182,7 +189,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
       <div className="bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Update Property</h2>
         <form className="flex flex-col gap-1 mt-5">
@@ -197,6 +204,18 @@ useEffect(() => {
             value={updatedProperty.name}
             onChange={handleInputChange}
           />
+          <label htmlFor="type" className="ml-2">
+          Property Type
+        </label>
+        <input
+          type="text"
+          className="p-1 border rounded-lg"
+          name="type"
+          placeholder="Enter your Type of the property"
+          value={updatedProperty.type}
+          onChange={handleInputChange}
+        />
+
           <label htmlFor="picture" className="ml-2">
             Picture
           </label>
@@ -230,6 +249,20 @@ useEffect(() => {
             value={updatedProperty.price}
             onChange={handleInputChange}
           />
+
+          <label htmlFor="amenities" className="ml-2">
+          Amenities
+        </label>
+        <input
+          type="text"
+          className="p-1 border rounded-lg"
+          name="amenities"
+          placeholder="Enter your Type of the property"
+          value={updatedProperty.amenities}
+          onChange={handleInputChange}
+        />
+
+
           <label htmlFor="description" className="ml-2">
             Description
           </label>

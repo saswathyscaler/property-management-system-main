@@ -10,6 +10,8 @@ const Navbar = () => {
   const isHomePage = location.pathname === "/";
   const login = location.pathname === "/login";
   const register = location.pathname === "/register";
+  const addproperty = location.pathname === "/property/addproperty";
+
 
   const [isUserIconClicked, setUserIconClicked] = useState(false);
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const Navbar = () => {
   const handleAddProperty = () => {
     navigate("property/addproperty");
   };
-  if (isHomePage || login || register) {
+  if (isHomePage || login || register||addproperty) {
     return null;
   }
 

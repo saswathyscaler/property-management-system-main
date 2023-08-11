@@ -29,6 +29,14 @@ const propertySchema = new Schema({
     type: Number,
     required: true,
   },
+  type:{
+    type:String,
+    required:true,
+  },
+  amenities:{
+    type:String,
+    
+  }
 });
 
 const Property = mongoose.model("Property", propertySchema);

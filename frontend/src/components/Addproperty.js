@@ -12,6 +12,8 @@ const Addproperty = () => {
     description: "",
     location: "",
     price: "",
+    type:"",
+    amenities:"",
   });
 
   const [token, setToken] = useState(""); 
@@ -50,8 +52,8 @@ const Addproperty = () => {
 
   const addProperty = async (e) => {
     e.preventDefault();
-    const { name, description, location, price } = input;
-    if (!name || !description || !location || !price || !image) {
+    const { name, description, location, price ,type,amenities } = input;
+    if (!name || !description || !location || !amenities|| !type || !price || !image) {
       toast.warn("All fields are required", {
         position: "top-right",
         autoClose: 3000,
@@ -85,6 +87,8 @@ const Addproperty = () => {
       formData.append("description", description);
       formData.append("location", location);
       formData.append("price", price);
+      formData.append("amenities", amenities);
+      formData.append("type", type);
       if (image) {
         formData.append("picture", image); 
       }
@@ -143,7 +147,7 @@ const Addproperty = () => {
 
   return (
     <div className="bg-white p-3 border rounded-xl shadow-xl max-w-xl mt-4 mx-auto sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%]">
-      <h2 className="text-3xl text-blue-700 font-bold text-center">Add new property</h2>
+      <h2 className="text-3xl  text-blue-700 font-bold text-center">Add new property</h2>
       <form className="flex flex-col gap-3 mt-5" encType="multipart/form-data">
           <label htmlFor="name" className="ml-2">
             Name
@@ -155,7 +159,16 @@ const Addproperty = () => {
             placeholder="Enter your name of the property"
             onChange={handleChange}
           />
-
+          <label htmlFor="type" className="ml-2">
+          Proerty Type
+        </label>
+        <input
+          type="text"
+          className="p-1 border rounded-lg"
+          name="type"
+          placeholder="Enter your name of the property"
+          onChange={handleChange}
+        />
           <label htmlFor="picture" className="ml-2">
             Picture
           </label>
@@ -192,6 +205,16 @@ const Addproperty = () => {
             placeholder="Add price"
             onChange={handleChange}
           />
+          <label htmlFor="amenities" className="ml-2">
+         Add  Amenities
+        </label>
+        <input
+          type="text"
+          className="p-1 border rounded-lg"
+          name="amenities"
+          placeholder="Enter your name of the property"
+          onChange={handleChange}
+        />
           <label htmlFor="description" className="ml-2">
             Description
           </label>

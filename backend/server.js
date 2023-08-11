@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
+const bodyParser = require("body-parser") 
 const user = require('./router/user');
 const cors = require("cors");
 const property = require("./router/property");
@@ -12,6 +13,7 @@ const app = express();
 
 dotenv.config();
 app.use(express.json());
+app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));  
 app.use(morgan("common"));

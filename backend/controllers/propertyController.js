@@ -7,8 +7,17 @@ const multer = require("multer");
 const upload = multer({ storage });
 
 const addProperty = async (req, res) => {
-  const { name, description, location, price } = req.body;
-  if (!name || !description || !location || !price || !req.file) {
+  const { name, description, location, type, price, amenities } = req.body;
+  console.log(req.body);
+  if (
+    !name ||
+    !description ||
+    !location ||
+    !price ||
+    !type ||
+    !amenities ||
+    !req.file
+  ) {
     return res
       .status(403)
       .json({ error: "Please fill up all fields and upload a single picture" });
@@ -27,6 +36,8 @@ const addProperty = async (req, res) => {
       picture: { url: req.file.path, filename: req.file.filename }, // Store the single image details in an object
       price,
       author: req.user._id,
+      type,
+      amenities,
     });
 
     await newProperty.save();
@@ -38,7 +49,7 @@ const addProperty = async (req, res) => {
 
 const showProperties = async (req, res) => {
   try {
-    const { price, location } = req.query;
+    const { price, location,type } = req.query;
 
     const filter = {};
     if (price) {
@@ -48,6 +59,10 @@ const showProperties = async (req, res) => {
     if (location) {
       filter.location = location;
     }
+    if (type) {
+      filter.type = type;
+    }
+
 
     const filteredProperties = await Property.find(filter);
 
@@ -58,16 +73,14 @@ const showProperties = async (req, res) => {
     res.status(200).json(filteredProperties);
   } catch (error) {
     console.error("Error retrieving filtered properties:", error);
-    res
-      .status(500)
-      .json({
-        error: "An error occurred while retrieving filtered properties",
-      });
+    res.status(500).json({
+      error: "An error occurred while retrieving filtered properties",
+    });
   }
 };
 
 const editProperty = async (req, res) => {
-  const { name, description, location, price } = req.body;
+  const { name, description, location, price ,type,amenities } = req.body;
   const propertyId = req.params.propertyId;
 
   try {
@@ -95,6 +108,8 @@ const editProperty = async (req, res) => {
     property.description = description;
     property.location = location;
     property.price = price;
+    property.type = type;
+    property.amenities = amenities;
 
     await property.save();
 
