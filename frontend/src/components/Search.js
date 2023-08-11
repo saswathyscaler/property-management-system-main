@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const Search = ({ onSearch }) => {
   const [filter1Value, setFilter1Value] = useState("");
   const [filter2Value, setFilter2Value] = useState("");
   const [filter3Value, setFilter3Value] = useState("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    handleSearch();
+  }, [filter1Value, filter2Value, filter3Value]); 
 
   const handleSearch = async () => {
     try {
       const queryParams = new URLSearchParams({
         price: filter1Value,
         location: filter2Value,
-        type:filter3Value,
+        type: filter3Value,
       });
 
       const url = `http://localhost:7000/property/showproperty?${queryParams}`;
@@ -46,6 +51,46 @@ const Search = ({ onSearch }) => {
     }
   };
 
+
+  const searchName = async (e) => {
+    e.preventDefault();
+    try {
+      const queryParams = new URLSearchParams({
+        name: search,
+      });
+
+      const url = `http://localhost:7000/property/showproperty?${queryParams}`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (response.status >= 400) {
+        toast.warn("No property match your query", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        onSearch(data);
+      }
+    } catch (error) {
+      console.error("Error fetching filtered properties:", error);
+      toast.error(`some error occure  ${error}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });     }
+  };
   return (
     <div className="p-4 bg-blue-100 border rounded-lg my-6">
       <div className="flex flex-col sm:flex-row gap-4 items-center">
@@ -71,28 +116,35 @@ const Search = ({ onSearch }) => {
           <option value="bbsr">bbsr</option>
           <option value="mumbai,maharastra">mumbai</option>
           <option value="ctc">ctc</option>
-          <option value="Japan">Japan</option>
+          <option value="japan">Japan</option>
         </select>
 
-
         <select
-        value={filter3Value}
-        onChange={(e) => setFilter3Value(e.target.value)}
-        className="p-2 border rounded-md bg-blue-200 w-40" // Adjusted width
-      >
-        <option value="">Types</option>
-        <option value="villa">Villa</option>
-        <option value="corporate">Corporal</option>
-        <option value="other">other</option>
-      
-      </select>
-
-        <button
-          onClick={handleSearch}
-          className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          value={filter3Value}
+          onChange={(e) => setFilter3Value(e.target.value)}
+          className="p-2 border rounded-md bg-blue-200 w-40" // Adjusted width
         >
-          Search
-        </button>
+          <option value="">Types</option>
+          <option value="villa">Villa</option>
+          <option value="corporate">Corporal</option>
+          <option value="other">other</option>
+        </select>
+
+        <form onSubmit={searchName}>
+          <input
+            type="text"
+            className="p-1 rounded border m-2"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            name="searchInput"
+          />
+          <button
+            type="submit"
+            className="p-1 bg-blue-700 text-white rounded-md hover:bg-blue-400"
+          >
+            Search
+          </button>
+        </form>
       </div>
     </div>
   );

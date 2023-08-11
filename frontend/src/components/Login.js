@@ -61,8 +61,8 @@ const Login = () => {
       body: JSON.stringify({ email, password }),
     });
     let data = await response.json();
-
-    const { msg, token } = data;
+console.log(data)
+    const { msg, token,userId } = data;
     console.log("token :", token);
     console.log(msg);
     if (msg === "invalid credentials") {
@@ -102,6 +102,7 @@ const Login = () => {
       });
  
       localStorage.setItem("token", token);
+      localStorage.setItem("userId",userId)
       console.log("logged in successfully");
       navigate("/Property");
     }

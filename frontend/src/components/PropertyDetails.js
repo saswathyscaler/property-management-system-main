@@ -11,6 +11,8 @@ const PropertyDetails = () => {
   const [property, setProperty] = useState(null);
   const [showUpdate, setShowUpdate] = useState(false);
 
+const id = localStorage.getItem("userId")
+
   const navigate = useNavigate();
   console.log("Property ID:", propertyId);
 
@@ -28,12 +30,14 @@ const PropertyDetails = () => {
   const handleEditProperty = () => {
     setShowUpdate(true);
   };
+
+
   const handleDeleteProperty = async () => {
     try {
       const accessToken = localStorage.getItem("token");
 
       if (!accessToken) {
-        console.error("Access token not found in local storage");
+        console.error("Access token not found ");
         return;
       }
 
@@ -62,9 +66,6 @@ const PropertyDetails = () => {
         navigate("/property");
       } 
       
-      else if (response.status === 404) {
-        console.log("Property not found");
-      }
       
       else if (response.status === 404) {
         toast.error("Property not found", {
@@ -132,20 +133,23 @@ const PropertyDetails = () => {
           <h1 className="font-bold text-blue-300">About This Property : </h1>
           <p>Description: {property.description}</p>
         </div>
-        <div className="flex justify-center mt-4">
-          <button
-            onClick={handleEditProperty}
-            className="bg-blue-500 p-2 md:p-4 border rounded-md mx-2"
-          >
-            Edit Property
-          </button>
-          <button
-            onClick={handleDeleteProperty}
-            className="bg-red-500 p-2 md:p-4 border rounded-md mx-2"
-          >
-            Delete Property
-          </button>
-        </div>
+
+        {id === property.author && (
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={handleEditProperty}
+              className="bg-blue-500 p-2 md:p-4 border rounded-md mx-2"
+            >
+              Edit Property
+            </button>
+            <button
+              onClick={handleDeleteProperty}
+              className="bg-red-500 p-2 md:p-4 border rounded-md mx-2"
+            >
+              Delete Property
+            </button>
+          </div>
+        )}
       </div>
     </div>
     <button

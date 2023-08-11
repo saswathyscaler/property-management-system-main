@@ -46,10 +46,9 @@ const addProperty = async (req, res) => {
     res.status(400).json({ msg: e.message });
   }
 };
-
 const showProperties = async (req, res) => {
   try {
-    const { price, location,type } = req.query;
+    const { price, location, type, name } = req.query;
 
     const filter = {};
     if (price) {
@@ -62,7 +61,9 @@ const showProperties = async (req, res) => {
     if (type) {
       filter.type = type;
     }
-
+    if (name) {
+      filter.name = name; 
+    }
 
     const filteredProperties = await Property.find(filter);
 

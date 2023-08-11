@@ -36,7 +36,7 @@ router.post("/api/register", async (req, res) => {
   }
 });
 
-//route for login
+//route for login 
 router.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -44,23 +44,25 @@ router.post("/api/login", async (req, res) => {
   }
   try {
     const findEmail = await User.findOne({ email: email });
-    console.log("findEmail", findEmail);
 
     if (findEmail) {
       const userPass = await bcrypt.compare(password, findEmail.password);
-      console.log(userPass);
 
       if (!userPass) {
         return res.status(400).json({ msg: "invalid credentials" });
       } else {
         // Generate the user token
         const userToken = await findEmail.generateToken();
+        const userId = findEmail._id; // Assuming your User model has _id field
 
         if (!userToken) {
           return res.status(500).json({ msg: "internal server error" });
         } else {
-
-          res.status(200).json({ msg: "user loggedin successfully", token: userToken });
+          res.status(200).json({
+            msg: "user loggedin successfully",
+            token: userToken,
+            userId: userId // Include the userId in the response
+          });
         }
       }
     } else {

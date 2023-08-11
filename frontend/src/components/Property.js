@@ -19,9 +19,7 @@ const Property = () => {
     mount = true;
     return () => {
     };
-  }, []);  
-
-
+  }, [data]);  
 
   const getAuthData = async () => {
     if (!data) {

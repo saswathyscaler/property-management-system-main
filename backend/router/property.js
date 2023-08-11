@@ -42,6 +42,8 @@ router.delete(
   deleteProperty
 );
 
+
+
 router.get("/property/:propertyId", getSingleProperty);
 
 module.exports = router;
