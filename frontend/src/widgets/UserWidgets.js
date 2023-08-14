@@ -27,7 +27,7 @@ const UserWidget = () => {
 
   const getAuthData = async () => {
     if (!data) {
-      return; // User is not logged in, so no need to make the API call
+      return; 
     }
 
     try {

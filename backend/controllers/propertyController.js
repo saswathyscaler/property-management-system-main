@@ -1,4 +1,3 @@
-// propertyController.js
 const mongoose = require("mongoose");
 const Property = require("../models/property");
 const { storage, cloudinary } = require("../cloudinary/index");
@@ -67,8 +66,7 @@ const showProperties = async (req, res) => {
     }
 
     if (q) {
-      // Use regex to search properties based on the q query
-      const searchRegex = new RegExp(q, "i"); // Case-insensitive regex
+      const searchRegex = new RegExp(q, "i"); 
       filter.$or = [
         { name: searchRegex },
         { type: searchRegex },
