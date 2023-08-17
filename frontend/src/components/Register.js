@@ -229,4 +229,3 @@ const Register = () => {
 };
 
 export default Register;
-// Navbar.jsx

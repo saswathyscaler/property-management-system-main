@@ -37,8 +37,8 @@ const Property = () => {
     }
   };
 
- const [showAddProperty, setShowAddProperty] = useState(false);
- const [properties, setProperties] = useState([]);
+ const [showAddProperty] = useState(false);
+ const [properties] = useState([]);
   
 
   return (

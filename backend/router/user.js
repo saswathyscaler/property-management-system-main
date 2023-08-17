@@ -53,7 +53,7 @@ router.post("/api/login", async (req, res) => {
       } else {
         // Generate the user token
         const userToken = await findEmail.generateToken();
-        const userId = findEmail._id; // Assuming your User model has _id field
+        const userId = findEmail._id; 
 
         if (!userToken) {
           return res.status(500).json({ msg: "internal server error" });
@@ -61,7 +61,7 @@ router.post("/api/login", async (req, res) => {
           res.status(200).json({
             msg: "user loggedin successfully",
             token: userToken,
-            userId: userId // Include the userId in the response
+            userId: userId 
           });
         }
       }
