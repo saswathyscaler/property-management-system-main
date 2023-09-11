@@ -16,7 +16,6 @@ const validate = async (req, res, next) => {
     }
 
     req.correctUser = correctUser;
-
     next();
   } catch (error) {
     res.status(401).send("un authorise user");

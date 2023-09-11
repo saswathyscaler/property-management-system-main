@@ -92,7 +92,7 @@ const Search = ({ onSearch }) => {
     }
   };
   const handleSearchFormSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
     searchName();
   };
   return (
@@ -101,7 +101,7 @@ const Search = ({ onSearch }) => {
         <select
           value={filter1Value}
           onChange={(e) => setFilter1Value(e.target.value)}
-          className="p-2 border rounded-md bg-blue-200 w-40" // Adjusted width
+          className="p-2 border rounded-md bg-blue-200 w-40" 
         >
           <option value="">Price</option>
           <option value="10000-50000">10000-50000</option>

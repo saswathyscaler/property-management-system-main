@@ -74,11 +74,6 @@ router.post("/api/login", async (req, res) => {
 });
 
 
-  
-
-
-
-
 router.put("api/login/:id", async (req, res) => {
   console.log(req.body);
 });
