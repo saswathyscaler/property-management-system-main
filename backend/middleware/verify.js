@@ -11,6 +11,7 @@ module.exports.verifyAuth =  (req, res, next) => {
   if (!token || !token.startsWith("Bearer ")) {
     return res.status(401).json({ error: "Unauthorized: Missing or Invalid authentication token" });
   }
+
   const authToken = token.split(" ")[1];
 
   jwt.verify(authToken, secretKey, (err, decoded) => {

@@ -32,7 +32,7 @@ const addProperty = async (req, res) => {
       name,
       description,
       location,
-      picture: { url: req.file.path, filename: req.file.filename }, 
+      picture: { url: req.file.path, filename: req.file.filename },
       price,
       author: req.user._id,
       type,
@@ -45,8 +45,6 @@ const addProperty = async (req, res) => {
     res.status(400).json({ msg: e.message });
   }
 };
-
-
 
 const showProperties = async (req, res) => {
   try {
@@ -66,13 +64,11 @@ const showProperties = async (req, res) => {
     }
 
     if (q) {
-      const searchRegex = new RegExp(q, "i"); 
+      const searchRegex = new RegExp(q, "i");
       filter.$or = [
         { name: searchRegex },
         { type: searchRegex },
         { location: searchRegex },
-      
-        
       ];
     }
 
@@ -93,9 +89,8 @@ const showProperties = async (req, res) => {
 
 
 
-
 const editProperty = async (req, res) => {
-  const { name, description, location, price ,type,amenities } = req.body;
+  const { name, description, location, price, type, amenities } = req.body;
   const propertyId = req.params.propertyId;
 
   try {
